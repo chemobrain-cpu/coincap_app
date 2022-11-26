@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "Coincap",
+    "slug": "Coincap",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "com.chemobrain857380.coincap",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/coincap.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1652f0"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "coincap"
+    },
+    "android": {
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.chemobrain857380.coincap",
+      "googleServicesFile": "./google-services.json",
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/coincap.png",
+          "color": "#ffffff",
+          "sounds": [
+            "./assets/coin.mp3"
+          ]
+        }
+      ]
+    ],
+
+    "web": {},
+    "extra": {
+      "eas": {
+        "projectId": "a2ed7caa-05dc-4533-bbfa-14ead00ce2fe"
+      }
+    }
+  }
+}
