@@ -16,9 +16,6 @@ let EmptyList = ({ navigation, actionText }) => {
                         <Feather name="arrow-left" size={25} color={background==='white'?"black":"white"} />
                     </TouchableOpacity>
 
-
-                    <Text style={styles.headerText}>Select asset to {actionText}</Text>
-
                     <TouchableOpacity style={styles.headerTextCon} onPress={() => navigation.goBack()}>
                         <Text style={{...styles.headerText,color:importantText}}>Select asset to {actionText}</Text>
                     </TouchableOpacity>
@@ -65,7 +62,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
 
     },
-    
+    headerTextCon: {
+        width:'80%'
+    },
 
     headerText: {
         fontSize: 21,

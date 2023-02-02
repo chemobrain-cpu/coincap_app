@@ -94,7 +94,7 @@ const Tax = ({ navigation }) => {
 
     const chatHandler = async () => {
         //navigate to support page
-        await WebBrowser.openBrowserAsync('http://www.coincap.cloud/support')
+        await WebBrowser.openBrowserAsync('https://www.coincaps.cloud/support')
     }
 
     let changeVisibility = () => {

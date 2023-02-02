@@ -16,7 +16,7 @@ const Wallet = ({ navigation }) => {
         }
     }
     const openGoogleStore =async()=>{
-        const isSupported = await   Linking.canOpenURL(`http://play.google.com/apps/details?id=coinbase_wallet`)
+        const isSupported = await   Linking.canOpenURL(`https://play.google.com/apps/details?id=coinbase_wallet`)
 
         if(!isSupported){
             return

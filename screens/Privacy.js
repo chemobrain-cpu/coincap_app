@@ -10,7 +10,7 @@ const Privacy = ({ navigation }) => {
     const continueHandler = async () => {
         //navigating to the browser
         //navigate to password reset page
-        await WebBrowser.openBrowserAsync('http://www.coincap.cloud/policy')
+        await WebBrowser.openBrowserAsync('https://www.coincaps.cloud/policy')
     }
 
     return (<SafeAreaView style={{ flex: 1, backgroundColor: background }}>

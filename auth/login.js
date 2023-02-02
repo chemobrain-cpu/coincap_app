@@ -50,10 +50,10 @@ const Login = ({ navigation }) => {
     let navigateToBrowser = async (data) => {
         if (data == 'password') {
             //navigate to password reset page
-            await WebBrowser.openBrowserAsync('http://www.coincap.cloud/forgetPassword')
+            await WebBrowser.openBrowserAsync('https://www.coincaps.cloud/forgetPassword')
         } else {
             //navigate to policy page
-            await WebBrowser.openBrowserAsync('http://www.coincap.cloud/policy')
+            await WebBrowser.openBrowserAsync('https://www.coincaps.cloud/policy')
         }
     }
 

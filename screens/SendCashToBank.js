@@ -735,8 +735,6 @@ const SendCashToBank = ({ navigation }) => {
                 </KeyboardAvoidingView>
 
 
-
-
                 <KeyboardAvoidingView style={styles.formCon}>
                     <Text style={{ ...styles.label, color: normalText }}>State</Text>
                     <TextInput style={{ ...styles.input, color: importantText, borderColor: fadeColor, }}

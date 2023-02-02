@@ -94,7 +94,7 @@ const ProfileSetting = ({ navigation }) => {
     const supportHandler = async () => {
         //navigating to the browser
         //navigate to password reset page
-        await WebBrowser.openBrowserAsync('http://www.coincap.cloud/support')
+        await WebBrowser.openBrowserAsync('https://www.coincaps.cloud/support')
     }
 
     const requirePinHandler = async () => {

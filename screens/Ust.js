@@ -62,7 +62,7 @@ const Ust = ({ navigation }) => {
     }, [])
 
     const chatHandler = async () => {
-        await WebBrowser.openBrowserAsync('http://www.coincap.cloud/support')
+        await WebBrowser.openBrowserAsync('https://www.coincaps.cloud/support')
     }
 
     const submitHandler = async () => {

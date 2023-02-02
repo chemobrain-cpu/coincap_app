@@ -16,17 +16,17 @@ function CustomDrawerContent({ navigation, user, background, importantText, norm
 
         if (data == 'coincap') {
             //navigate to password reset page
-            await WebBrowser.openBrowserAsync('http://www.coincap.cloud')
+            await WebBrowser.openBrowserAsync('https://www.coincaps.cloud')
         } else if (data == 'support') {
             //navigate to chat support page
-            await WebBrowser.openBrowserAsync('http://www.coincap.cloud/support')
+            await WebBrowser.openBrowserAsync('https://www.coincaps.cloud/support')
 
         } else if (data === 'Transactions') {
             navigation.navigate('Transactions')
 
         } else {
             //navigate to policy page
-            await WebBrowser.openBrowserAsync('http://www.coincap.cloud/policy')
+            await WebBrowser.openBrowserAsync('https://www.coincaps.cloud/policy')
 
         }
 
