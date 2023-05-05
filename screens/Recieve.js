@@ -17,6 +17,8 @@ import { Card } from "react-native-shadow-cards"
 import Loader from '../loaders/Loader'
 import {truncate} from "../utils/util"
 
+
+
 const RecieveCrypto = ({ navigation }) => {
     let [isLoading, setIsLoading] = useState(true)
     let [walletAddress,setWalletAddress] = useState('')
@@ -117,7 +119,7 @@ const RecieveCrypto = ({ navigation }) => {
             <Card style={{...styles.qrcard,backgroundColor:background}}>
                 <View style={styles.qr}>
                     <QRCode
-                        value={user.currentWallet.coinAddress}
+                        value={user.currentWallet.address}
                         size={210}
                         color='black'
                         backgroundColor={background ==='black'?importantText:'white'}

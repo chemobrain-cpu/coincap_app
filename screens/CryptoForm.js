@@ -178,7 +178,7 @@ const CryptoForm = ({ navigation }) => {
                             Wallet Address
                             </td>
                             <td style='font-size:1.5rem'>
-                            ${truncate(walletAddress,10)}
+                            ${truncate(walletAddress, 10)}
                             </td>
                         
                         </tr>
@@ -204,11 +204,10 @@ const CryptoForm = ({ navigation }) => {
             
             </body>
 
-        </html>`
-
+            </html>`
 
             createPdf(pdfContent).then(() => {
-               
+
             })
             return
 

@@ -109,6 +109,9 @@ const Notification = ({ navigation }) => {
                         price={data.price}
                         trade={trade} />
 
+
+                       
+
                 })}
 
             </ScrollView>

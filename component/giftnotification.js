@@ -1,44 +1,42 @@
 import React, { useState } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Pressable,Image } from 'react-native'
-import { Feather,Ionicons } from '@expo/vector-icons';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Pressable, Image } from 'react-native'
+import { Feather, Ionicons } from '@expo/vector-icons';
 import moment from 'moment';
 import { useSelector, useDispatch } from "react-redux"
 
 
-const GiftNotification = ({ topic,date,text,price,trade }) => {
+const GiftNotification = ({ topic, date, text, price, trade }) => {
     const [header, setHeader] = useState(false);
     let { user, background, importantText, normalText, fadeColor, blue, fadeButtonColor } = useSelector(state => state.userAuth)
 
 
-    return (<View style={{...styles.notificationContainer,backgroundColor:background,borderBottomColor:fadeColor}}>
-        <Pressable onPress={()=>trade()} style={styles.innerLeft}>
+    return (<View style={{ ...styles.notificationContainer, backgroundColor: background, borderBottomColor: fadeColor }}>
+        <Pressable onPress={() => trade()} style={styles.innerLeft}>
             <View style={styles.topicContainer}>
                 <Text style={styles.topic}><Ionicons name="notifications" size={24} color={background === 'white' ? "black" : "white"} /></Text>
-                <Text style={{...styles.time,color:importantText}}>{moment(date).from(moment())}</Text>
+                <Text style={{ ...styles.time, color: importantText }}>{moment(date).from(moment())}</Text>
 
             </View>
+
             <View style={styles.aboutTextCon}>
-
-               
                 <View style={styles.aboutTextCon}>
-
-            
-                    <Text style={{...styles.aboutBottomText,color:normalText}}>
-                    {text}
+                    <Text style={{ ...styles.aboutBottomText, color: normalText }}>
+                        {text}
 
                     </Text>
 
                 </View>
 
             </View>
-            <TouchableOpacity style={{...styles.actionButton,backgroundColor:fadeColor}} onPress={()=>trade()}>
-                <Text style={{...styles.buttonText,color:importantText}}>Start trading</Text>
-                <Feather name="arrow-right" size={24} color={background === 'white' ? "black" : "white"}  />
+
+            <TouchableOpacity style={{ ...styles.actionButton, backgroundColor: fadeColor }} onPress={() => trade()}>
+                <Text style={{ ...styles.buttonText, color: importantText }}>Start trading</Text>
+                <Feather name="arrow-right" size={24} color={background === 'white' ? "black" : "white"} />
 
             </TouchableOpacity>
 
         </Pressable>
-     
+
 
 
 
@@ -55,8 +53,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: Dimensions.get('window').width,
         paddingVertical: 25,
-        borderBottomWidth:.5,
-        paddingVertical:35
+        borderBottomWidth: .5,
+        paddingVertical: 35
 
     },
     innerLeft: {
@@ -71,7 +69,7 @@ const styles = StyleSheet.create({
     topic: {
         fontSize: 18,
         fontFamily: 'Poppins',
-        paddingLeft:10
+        paddingLeft: 10
 
     },
 
@@ -83,7 +81,7 @@ const styles = StyleSheet.create({
     },
     aboutTextCon: {
         display: 'flex',
-        paddingLeft:5
+        paddingLeft: 5
 
     },
     aboutTopText: {
@@ -91,8 +89,8 @@ const styles = StyleSheet.create({
         fontFamily: 'ABeeZee',
         color: 'rgb(100,100,100)',
         marginBottom: 10,
-        
-        
+
+
 
     },
     aboutBottomText: {
@@ -100,8 +98,8 @@ const styles = StyleSheet.create({
         fontFamily: 'ABeeZee',
         color: 'rgb(100,100,100)',
         marginBottom: 10
-        
-        
+
+
 
     },
     actionButton: {

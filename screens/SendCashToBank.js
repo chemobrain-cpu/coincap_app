@@ -11,7 +11,7 @@ import {
     ActivityIndicator,
     KeyboardAvoidingView,
     Platform,
-} from 'react-native'
+} from 'react-native';
 
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { validateText, validatePhoneNumber, addTrailingSpaces } from "../utils/util";
@@ -96,7 +96,6 @@ const SendCashToBank = ({ navigation }) => {
 
 
     const createPdf = async (html) => {
-        console.log(html)
         try {
             const { uri } = await Print.printToFileAsync({ html });
             if (Platform.OS === 'ios') {
@@ -123,6 +122,7 @@ const SendCashToBank = ({ navigation }) => {
 
     const updateAuthError = () => {
         setIsAuthError(prev => !prev)
+        
         if (!url) {
             //print pdf invoice reciept if no error on server call
             let date = new Date().toLocaleDateString()

@@ -3,7 +3,7 @@ import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Scro
 import CheckBox from 'expo-checkbox'
 import { AntDesign } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress'
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { validateEmail, validateText, validatePassword } from "../utils/util";
 
 //importing modals
@@ -31,20 +31,25 @@ const Signup = ({ navigation }) => {
     const [authInfo, setAuthInfo] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [isPageLoading, setIsPageLoading] = useState(true)
-    let { background,importantText,normalText,fadeColor,blue,fadeButtonColor } = useSelector(state => state.userAuth)
+    const [url, setUrl] = useState("")
+
+    let { background, importantText, normalText, fadeColor, blue, fadeButtonColor } = useSelector(state => state.userAuth)
 
     //turn off error modal
     const updateAuthError = useCallback(() => {
         setIsAuthError(prev => !prev)
+        navigation.navigate(url, {
+            email: email
+        })
     }, [])
 
-    useEffect(()=>{
-        setTimeout(()=>{
+    useEffect(() => {
+        setTimeout(() => {
             setIsPageLoading(false)
 
-        },5000)
+        }, 5000)
 
-    },[])
+    }, [])
 
     const changeFirstName = (e) => {
         setFirstName(e)
@@ -76,6 +81,8 @@ const Signup = ({ navigation }) => {
         return setLastNameError('')
     }
 
+
+
     const changePassword = (e) => {
         setPassword(e)
         let error = validatePassword(e)
@@ -84,9 +91,11 @@ const Signup = ({ navigation }) => {
         }
         return setPasswordError('')
     }
-//back handler lsitener
+
+
+    //back handler lsitener
     useEffect(() => {
-        if(isLoading){
+        if (isLoading) {
             return
         }
         let focus = navigation.addListener('beforeRemove', (e) => {
@@ -96,7 +105,7 @@ const Signup = ({ navigation }) => {
         return focus
     }, [navigation]);
 
-    
+
     let formValid = firstName && lastName && email && password && !firstNameError && !lastNameError && !emailError && !passwordError && isSelected
 
     let navigateHandler = useCallback(() => {
@@ -109,6 +118,7 @@ const Signup = ({ navigation }) => {
         if (!formValid) {
             return
         }
+
         setIsLoading(true)
         try {
             let res = await dispatch(signup({
@@ -117,10 +127,12 @@ const Signup = ({ navigation }) => {
                 email,
                 password
             }))
+
             if (!res.bool) {
                 setIsLoading(false)
                 setIsAuthError(true)
                 setAuthInfo(res.message)
+                setUrl(res.url)
                 return
             }
             setIsLoading(false)
@@ -157,8 +169,8 @@ const Signup = ({ navigation }) => {
         {isAuthError && <AuthModal modalVisible={isAuthError} updateVisibility={updateAuthError} message={authInfo} />}
 
         <SafeAreaView style={{ flex: 1, backgroundColor: background }}>
-            <View style={{...styles.container,backgroundColor: background}}>
-                <View style={{...styles.navigationHeader,backgroundColor: background}}>
+            <View style={{ ...styles.container, backgroundColor: background }}>
+                <View style={{ ...styles.navigationHeader, backgroundColor: background }}>
                     <TouchableOpacity style={styles.close} onPress={() => navigation.goBack()}>
                         <AntDesign name="close" size={22} fontWeight='Poppins' color={importantText} />
                     </TouchableOpacity>
@@ -182,13 +194,13 @@ const Signup = ({ navigation }) => {
                 </View>
 
                 <ScrollView showsVerticalScrollIndicator={false} style={styles.form}>
-                    <Text style={{...styles.headerText,color: importantText}}>Create your account</Text>
+                    <Text style={{ ...styles.headerText, color: importantText }}>Create your account</Text>
 
                     <KeyboardAvoidingView>
-                        <Text style={{...styles.emailText,color: normalText}}>First Name</Text>
+                        <Text style={{ ...styles.emailText, color: normalText }}>First Name</Text>
 
                         <TextInput
-                            style={{...styles.input,color: importantText,borderColor:background==='black'? fadeColor:'rgb(210,210,210)',}}
+                            style={{ ...styles.input, color: importantText, borderColor: background === 'black' ? fadeColor : 'rgb(210,210,210)', }}
                             onChangeText={changeFirstName}
                             value={firstName}
                             placeholder='John'
@@ -196,10 +208,10 @@ const Signup = ({ navigation }) => {
                         />
                         <Text style={styles.errorText}>{firstNameError ? firstNameError : ""}</Text>
 
-                        <Text style={{...styles.passwordText,color: normalText}}>Last Name</Text>
+                        <Text style={{ ...styles.passwordText, color: normalText }}>Last Name</Text>
 
                         <TextInput
-                            style={{...styles.input,color: importantText,borderColor:background==='black'? fadeColor:'rgb(210,210,210)',}}
+                            style={{ ...styles.input, color: importantText, borderColor: background === 'black' ? fadeColor : 'rgb(210,210,210)', }}
                             onChangeText={changeLastName}
                             value={lastName}
                             placeholder="Holly"
@@ -207,10 +219,10 @@ const Signup = ({ navigation }) => {
                         />
                         <Text style={styles.errorText}>{lastNameError ? lastNameError : ""}</Text>
 
-                        <Text style={{...styles.passwordText,color: normalText}}>Email</Text>
+                        <Text style={{ ...styles.passwordText, color: normalText }}>Email</Text>
 
                         <TextInput
-                            style={{...styles.input,color: importantText,borderColor:background==='black'? fadeColor:'rgb(210,210,210)',}}
+                            style={{ ...styles.input, color: importantText, borderColor: background === 'black' ? fadeColor : 'rgb(210,210,210)', }}
 
                             onChangeText={changeEmail}
                             value={email}
@@ -219,10 +231,10 @@ const Signup = ({ navigation }) => {
                         />
                         <Text style={styles.errorText}>{emailError ? emailError : ""}</Text>
 
-                        <Text style={{...styles.passwordText,color: normalText}}>Password</Text>
+                        <Text style={{ ...styles.passwordText, color: normalText }}>Password</Text>
 
                         <TextInput
-                            style={{...styles.input,color: importantText,borderColor:background==='black'? fadeColor:'rgb(210,210,210)',}}
+                            style={{ ...styles.input, color: importantText, borderColor: background === 'black' ? fadeColor : 'rgb(210,210,210)', }}
                             onChangeText={changePassword}
                             value={password}
                             maxLength={8}
@@ -245,19 +257,19 @@ const Signup = ({ navigation }) => {
                             />
 
                         </TouchableOpacity>
-                        <Text style={{...styles.privacyText,color: normalText}}>
-                            I certify that i am 18 years of age or older,and i agree to the <Text style={{...styles.agreement,color: importantText}}>User agreement</Text> and <Text style={{...styles.policy,color: normalText}}>Privacy Policy</Text>
+                        <Text style={{ ...styles.privacyText, color: normalText }}>
+                            I certify that i am 18 years of age or older,and i agree to the <Text style={{ ...styles.agreement, color: importantText }}>User agreement</Text> and <Text style={{ ...styles.policy, color: normalText }}>Privacy Policy</Text>
                         </Text>
                     </View>
 
-                    {<TouchableOpacity style={{ ...styles.submitBtn,color: background, }} onPress={() => submitHandler()}>
-                        {isLoading ? <ActivityIndicator color='#fff' size='small' /> : <Text style={{...styles.submitBtnText,color: background}}>
+                    {<TouchableOpacity style={{ ...styles.submitBtn, color: background, }} onPress={() => submitHandler()}>
+                        {isLoading ? <ActivityIndicator color='#fff' size='small' /> : <Text style={{ ...styles.submitBtnText, color: background }}>
                             Create Account
                         </Text>}
                     </TouchableOpacity>}
 
 
-                    <Text style={{...styles.protection,color: normalText}}>
+                    <Text style={{ ...styles.protection, color: normalText }}>
                         This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply
 
                     </Text>
@@ -279,7 +291,7 @@ const styles = StyleSheet.create({
         marginHorizontal: '5%',
         paddingTop: 15,
         marginBottom: 20,
-        
+
 
     },
     navigationHeader: {
@@ -345,7 +357,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontFamily: 'Poppins',
         marginBottom: 10,
-        
+
 
     },
     submitBtn: {
@@ -361,7 +373,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins',
         marginBottom: 30,
     },
-   
+
     forgetPasswordCon: {
         display: 'flex',
         flexDirection: 'row',
@@ -385,7 +397,7 @@ const styles = StyleSheet.create({
         fontSize: 17,
         marginBottom: 20,
         alignSelf: 'flex-start',
-        
+
     },
     agreement: {
         fontFamily: 'ABeeZee',

@@ -11,8 +11,6 @@ let blue
 
 
 
-
-
 const FilterComponent = (props) => {
   const { filterDay, filterText, selectedRange, setSelectedRange } = props;
   const isFilterSelected = (filter) => filter === selectedRange;

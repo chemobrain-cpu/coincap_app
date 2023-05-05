@@ -61,40 +61,40 @@ export const checkIfIsLoggedIn = () => {
     let backgroundColorStyle = await AsyncStorage.getItem('@backgroundColorStyle');
     if (!backgroundColorStyle) {
       let data = {
-        background:'black',
+        background: 'black',
         importantText: 'white',
         normalText: '#5d616d',
         fadeColor: 'rgb(30,30,30)',
         blue: '#1652f0',
         fadeButtonColor: 'rgb(30,30,30)',
-  
+
       }
       dispatch({ type: CHANGE_BLACK, payload: data })
 
     } else if (backgroundColorStyle == 'white') {
-       let data = {
-      background:'white',
-      importantText: 'black',
-      normalText: '#5d616d',
-      fadeColor: 'rgb(240,240,240)',
-      blue: '#1652f0',
-      fadeButtonColor: 'rgb(200,200,200)',
+      let data = {
+        background: 'white',
+        importantText: 'black',
+        normalText: '#5d616d',
+        fadeColor: 'rgb(240,240,240)',
+        blue: '#1652f0',
+        fadeButtonColor: 'rgb(200,200,200)',
 
-    }
+      }
       dispatch({ type: CHANGE_WHITE, payload: data })
 
     } else if (backgroundColorStyle == 'black') {
       let data = {
-        background:'black',
+        background: 'black',
         importantText: 'white',
         normalText: '#5d616d',
         fadeColor: 'rgb(30,30,30)',
         blue: '#1652f0',
         fadeButtonColor: 'rgb(30,30,30)',
-  
+
       }
-      
-      dispatch({ type: CHANGE_BLACK, payload: data})
+
+      dispatch({ type: CHANGE_BLACK, payload: data })
 
     }
 
@@ -177,7 +177,7 @@ export const changeToBlackBackground = () => {
     //before anything
     await AsyncStorage.setItem('@backgroundColorStyle', 'black');
     let data = {
-      background:'black',
+      background: 'black',
       importantText: 'white',
       normalText: '#5d616d',
       fadeColor: 'rgb(30,30,30)',
@@ -186,7 +186,7 @@ export const changeToBlackBackground = () => {
 
     }
 
-    dispatch({ type: CHANGE_BLACK, payload:data })
+    dispatch({ type: CHANGE_BLACK, payload: data })
 
   }
 
@@ -196,7 +196,7 @@ export const changeToWhiteBackground = () => {
     //before anything
     await AsyncStorage.setItem('@backgroundColorStyle', 'white');
     let data = {
-      background:'white',
+      background: 'white',
       importantText: 'black',
       normalText: '#5d616d',
       fadeColor: 'rgb(235,235,235)',
@@ -221,18 +221,21 @@ export const signup = (data) => {
         },
         body: JSON.stringify(data)
       })
-      if (response.status === 400) {
-        let data = await response.json()
-        return {
-          bool: false,
-          message: data.response
-        }
-      }
+
       if (response.status === 300) {
         let data = await response.json()
         return {
           bool: false,
-          message: data.response
+          message: data.response,
+          url: 'Signup',
+        }
+      }
+      if (response.status === 301) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response,
+          url: 'Login'
         }
       }
       if (response.status === 200) {
@@ -266,7 +269,7 @@ export const login = (data) => {
         body: JSON.stringify(data)
       })
       if (response.status === 404) {
-        console.log(404)
+
         let data = await response.json()
         return {
           bool: false,
@@ -275,7 +278,7 @@ export const login = (data) => {
         }
       }
       if (response.status === 403) {
-        console.log(403)
+
         let data = await response.json()
         return {
           bool: false,
@@ -284,9 +287,9 @@ export const login = (data) => {
         }
       }
       if (response.status === 300) {
-        console.log(300)
+
         let data = await response.json()
-        console.log(data)
+
         return {
           bool: false,
           message: data.response,
@@ -294,7 +297,7 @@ export const login = (data) => {
         }
       }
       if (response.status === 201) {
-        console.log(201)
+
         let data = await response.json()
         return {
           bool: false,
@@ -303,7 +306,7 @@ export const login = (data) => {
         }
       }
       if (response.status === 202) {
-        console.log(202)
+
         let data = await response.json()
         return {
           bool: false,
@@ -312,7 +315,7 @@ export const login = (data) => {
         }
       }
       if (response.status === 200) {
-        console.log(200)
+
         let data = await response.json()
         //dispatching the LOGIN action
         await AsyncStorage.setItem('tokenExpiry', `${data.response.expiresIn}`);
@@ -328,7 +331,6 @@ export const login = (data) => {
 
       }
     } catch (err) {
-      console.log('error')
       return {
         bool: false,
         message: err.message,
@@ -602,7 +604,8 @@ export const loadCoins = (pageNumber) => {
   return async (dispatch, getState) => {
     //do some check on the server if its actually login before proceding to dispatch
     try {
-      const response = await axios.get(`http://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=${pageNumber}&sparkline=false&price_change_percentage=24h`)
+      
+      let response = await fetch(`https://coincap-backend.onrender.com/coins/300/${pageNumber}`)
 
       return {
         bool: true,
@@ -623,7 +626,7 @@ export const loadWatchList = (coinIds) => {
     //do some check on the server if its actually login before proceding to dispatch
 
     try {
-      const response = await axios.get(`http://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&ids=${coinIds}&per_page=20&sparkline=false&price_change_percentage=24h`)
+      let response = await fetch(`https://coincap-backend.onrender.com/coins/10/1`)
 
 
       return {
@@ -917,7 +920,7 @@ export const addPaymentMethod = (data) => {
 
     try {
       let response = await fetch(`https://coincap-backend.onrender.com/auth/paymentmethod`, {
-        method: "PATCH",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           "header": `${token}`
@@ -995,8 +998,8 @@ export const uploadFrontId = (data) => {
           accessKey: 'AKIAZZTWQ7HAPRYD3APX',
           secretKey: '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',
           successActionStatus: 201
-
         };
+        
         return RNS3.put(file, options)
           .then(response => {
             if (response.status !== 201)
@@ -1010,6 +1013,7 @@ export const uploadFrontId = (data) => {
             console.log(error);
           });
       };
+
       await upload()
       if (!imageUrl) {
         return {
@@ -1073,6 +1077,7 @@ export const uploadFrontId = (data) => {
 
 
 }
+
 export const uploadBackId = (data) => {
   return async (dispatch, getState) => {
     try {
@@ -1222,6 +1227,7 @@ export const uploadPhotoId = (data) => {
           });
       };
       await upload()
+
       if (!imageUrl) {
         console.log(err)
         return {
@@ -1352,6 +1358,7 @@ export const buyCrypto = (data) => {
 
   }
 }
+
 export const sellCrypto = (data) => {
   return async (dispatch, getState) => {
 
@@ -1532,7 +1539,7 @@ export const sendCryptoToWallet = (data) => {
       if (response.status === 200) {
         let data = await response.json()
         //update user in store
-         dispatch({ type: UPDATEUSER, payload: data.response })
+        dispatch({ type: UPDATEUSER, payload: data.response })
         return {
           bool: true,
           message: data.response
@@ -1608,7 +1615,7 @@ export const sendCryptoToBank = (data) => {
       if (response.status === 200) {
 
         let data = await response.json()
-         //update user in store
+        //update user in store
         dispatch({ type: UPDATEUSER, payload: data.response })
 
         return {
@@ -2291,6 +2298,7 @@ export const secureAccount = (data) => {
   }
 
 }
+
 export const offPinSwitch = (data) => {
   return async (dispatch, getState) => {
     let { token } = getState().userAuth
@@ -2614,7 +2622,7 @@ export const getTransactions = () => {
       if (response.status === 200) {
         let data = await response.json()
 
-        
+
 
         return {
           bool: true,
@@ -2670,7 +2678,7 @@ export const getTransaction = (id) => {
       if (response.status === 200) {
         let data = await response.json()
 
-        
+
 
         return {
           bool: true,

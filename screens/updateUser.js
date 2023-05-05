@@ -24,11 +24,7 @@ import Loader from '../loaders/Loader';
 
 const UserCard = ({ navigation }) => {
     let { user,background,importantText,normalText,fadeColor,blue,fadeButtonColor } = useSelector(state => state.userAuth)
-    const dispatch = useDispatch()
     const [header, setHeader] = useState(false);
-
-    
-
     const [firstName, setFirstName] = useState('')
     const [firstNameError, setFirstNameError] = useState('')
 
@@ -40,6 +36,7 @@ const UserCard = ({ navigation }) => {
     const [isAuthError, setIsAuthError] = useState(false)
     const [authInfo, setAuthInfo] = useState("")
     const [isScreenLoading, setIsScreenLoading] = useState(true)
+    const dispatch = useDispatch()
 
     useEffect(()=>{
         setFirstName(user.firstName)
@@ -73,8 +70,6 @@ const UserCard = ({ navigation }) => {
     }
 
     let updateHandler = async () => {
-
-
         setIsLoading(true)
 
         navigation.goBack()

@@ -12,9 +12,6 @@ const initialState = {
     fadeColor: '',
     blue: '',
     fadeButtonColor: '',
-
-    
-
 }
 
 
@@ -65,7 +62,8 @@ export const userAuthReducer = (state = initialState, action) => {
                     token: action.payload.token,
                     expiresIn: action.payload.expiresIn,
                     user: action.payload.user,
-                    notifications: action.payload.notification
+                    notifications: action.payload.notification,
+                    
                 }
             }
             break;

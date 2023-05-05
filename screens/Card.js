@@ -57,6 +57,8 @@ const Card = ({ navigation }) => {
     const [authInfo, setAuthInfo] = useState("")
     const [isScreenLoading, setIsScreenLoading] = useState(true)
 
+
+    
     //preventing memory leak
     useEffect(() => {
         let focus = navigation.addListener('beforeRemove', (e) => {

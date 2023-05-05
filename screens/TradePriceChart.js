@@ -70,6 +70,8 @@ const PriceChart = ({ navigation }) => {
     return focus
   }, [isLoading]);
 
+  
+
   const {
     name: coinId,
     market_cap,
@@ -109,7 +111,6 @@ const PriceChart = ({ navigation }) => {
   }
 
   const addAssetToWatchList = async () => {
-    //if no user navigate to login
     try {
       setIsLoading(true)
       if (!user) {
@@ -184,6 +185,7 @@ const PriceChart = ({ navigation }) => {
 
     setIsLoading(false)
   };
+
   const scrollHandler = (e) => {
     if (e.nativeEvent.contentOffset.y > 70) {
       setHeader(true)
@@ -235,8 +237,6 @@ const PriceChart = ({ navigation }) => {
     symbol
 
   } = coin;
-
-
 
   //opening second modal after first modal
   let navigateHandler = (action) => {
@@ -308,6 +308,8 @@ const PriceChart = ({ navigation }) => {
 
     }
   }
+
+  
   //action that provides verification screens on verification modal close
   const verificationNavigationHandler = () => {
     setIsAuthError(prev => !prev)
@@ -648,7 +650,6 @@ const PriceChart = ({ navigation }) => {
 
 
         </View>
-
 
       </ScrollView>
 

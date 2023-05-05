@@ -68,7 +68,6 @@ let SellList = ({ navigation }) => {
 
   let fetchData = async (pageNumber) => {
     // You can await here
-
     setError(false)
     setIsLoading(true)
     let assets = user.personalAssets.map(data => {

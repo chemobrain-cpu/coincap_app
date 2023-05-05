@@ -3,12 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image, Dimensions } from 'rea
 import { Feather } from '@expo/vector-icons'
 import {truncate} from "../utils/util"
 import { useDispatch,useSelector } from "react-redux"
-/*
-function arePropsEqual(prevProps, nextProps) {
-    return prevProps.coin.id.toString() === nextProps.coin.id.toString()
 
-    
-  }*/
 
   
 
@@ -19,8 +14,6 @@ let CryptoCard = ({ navigationHandler, coin }) => {
     //destructuring the coin datastructure
     let { background,importantText,normalText,fadeColor,blue,fadeButtonColor } = useSelector(state => state.userAuth)
 
-
-    
 
     let { image, name, id, symbol, current_price, price_change_percentage_24h } = coin
 
