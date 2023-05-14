@@ -97,20 +97,10 @@ let AddressFromList = ({ navigation }) => {
     }
 
     let onEndFetch = async (pageNumber) => {
-        // You can await here
-        if (isRefreshing) {
-            return;
-        }
-        let response = await dispatch(loadCoins(pageNumber))
-        if (!response.bool) {
-
-            setError(true)
-            return
-        }
-        setCoins((existingCoins) => [...existingCoins, ...response.message]);
-        setFilteredCoins((existingCoins) => [...existingCoins, ...response.message]);
-
+        return
     }
+
+
 
     let Footer = ()=>{
         return <FooterLoader/>

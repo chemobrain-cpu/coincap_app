@@ -116,7 +116,7 @@ const Calculator = ({ navigation }) => {
             setModalVisible(false)
             return navigation.navigate("Assets")
         }
-    }
+    }git addgi
 
 
     //button function
@@ -208,6 +208,7 @@ const Calculator = ({ navigation }) => {
                 }
 
             }
+            
 
 
             //hence proceexd to buy

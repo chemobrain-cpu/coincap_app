@@ -149,20 +149,20 @@ const Home = ({ navigation }) => {
 
     let fetchWatchList = async () => {
         // You can await here
-        if (user.watchList.length < 1) {
-            let response = await dispatch(loadCoins())
-            if (!response.bool) {
-                setIsError(true)
-                setIsWatchListLoading(false)
-                return
-            }
-
-            setWatchListCoins([...[response.message[0], response.message[1], response.message[2], response.message[3], response.message[4], response.message[5], response.message[6]]]);
-
+        let response = await dispatch(loadCoins())
+        if (!response.bool) {
+            setIsError(true)
             setIsWatchListLoading(false)
-            setIsLoading(false)
+            return
+        }
 
-        } else {
+        setWatchListCoins([...[response.message[0], response.message[1], response.message[2], response.message[3], response.message[4], response.message[5], response.message[6]]]);
+
+        setIsWatchListLoading(false)
+        setIsLoading(false)
+
+
+        /* else {
             let transformIds = user.watchList.join('%2c')
             let response = await dispatch(loadWatchList(transformIds))
             if (!response.bool) {
@@ -173,7 +173,7 @@ const Home = ({ navigation }) => {
             setWatchListCoins(response.message);
             setIsWatchListLoading(false)
             setIsLoading(false)
-        }
+        }*/
 
 
 

@@ -1,4 +1,4 @@
-import { FORCEUSERIN, COINS, LOGIN, CHANGE_WALLET, MODIFY_WATCHLIST, PAYMENT_METHOD, BUY_ASSET, CONVERT_ASSET, SELL_ASSET, TOPUP, TEMPORAL, CLEANTEMPORAL, READNOTIFICATION, ADD_ID, LOGOUT, UPDATEUSER, CHANGE_BLACK,CHANGE_WHITE } from "../action/appStorage";
+import { FORCEUSERIN, COINS, LOGIN, CHANGE_WALLET, MODIFY_WATCHLIST, PAYMENT_METHOD, BUY_ASSET, CONVERT_ASSET, SELL_ASSET, TOPUP, TEMPORAL, CLEANTEMPORAL, READNOTIFICATION, ADD_ID, LOGOUT, UPDATEUSER, CHANGE_BLACK,CHANGE_WHITE,LOAD_COINS } from "../action/appStorage";
 
 const initialState = {
     token: "",
@@ -12,6 +12,7 @@ const initialState = {
     fadeColor: '',
     blue: '',
     fadeButtonColor: '',
+    assets:[]
 }
 
 
@@ -194,7 +195,14 @@ export const userAuthReducer = (state = initialState, action) => {
                 }
             }
             break;
-
+        case LOAD_COINS:
+            if (action.payload) {
+                return {
+                    ...state,
+                    assets: action.payload,
+                }
+            }
+            break;
         default:
             return state
     }

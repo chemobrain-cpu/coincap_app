@@ -116,30 +116,10 @@ let ConvertToList = ({ navigation }) => {
     }
   }
   let onEndFetch = async (pageNumber) => {
-    // You can await here
-
-    let response = await dispatch(loadCoins(pageNumber))
-    if (!response.bool) {
-
-      setError(true)
-      return
-    }
-    //removing duplicate
-    let arr = [...coins, ...response.message]
-    let uniqueIds = []
-    const unique = arr.filter(element => {
-      const isDuplicate = uniqueIds.includes(element.id)
-      if (!isDuplicate) {
-        uniqueIds.push(element)
-        return true
-      }
-      return false
-    })
-    setCoins(unique);
-
-    setFilteredCoins(unique);
-
+    return
   }
+
+  
 
   const renderItem = ({ item, index }) => {
     if (item.id == fromName) {

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, } from 'react'
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, FlatList,KeyboardAvoidingView } from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, FlatList, KeyboardAvoidingView } from 'react-native'
 import { Feather, FontAwesome } from '@expo/vector-icons'
 import CryptoCard from '../component/currencyContainer'
 import WalletAssetLoader from "../loaders/walletAssetsLoader";
-import { loadCoins, loadWatchList } from "../store/action/appStorage";
+import { loadCoins} from "../store/action/appStorage";
 import Error from '../component/errorComponent'
 import { useDispatch, useSelector } from "react-redux"
 
@@ -17,19 +17,19 @@ let WatchList = ({ navigation }) => {
   let [error, setError] = useState(false)
   let dispatch = useDispatch()
 
-     //preventing memory leak
-     useEffect(() => {
-      let focus = navigation.addListener('beforeRemove', (e) => {
-          if (isLoading) {
-              e.preventDefault();
-          } else {
-              //can go back
-          }
-      });
-      return focus
+  //preventing memory leak
+  useEffect(() => {
+    let focus = navigation.addListener('beforeRemove', (e) => {
+      if (isLoading) {
+        e.preventDefault();
+      } else {
+        //can go back
+      }
+    });
+    return focus
   }, [isLoading]);
 
-  let { user } = useSelector(state => state.userAuth)
+  let { user, assets } = useSelector(state => state.userAuth)
 
   //destructuring from param
 
@@ -57,38 +57,21 @@ let WatchList = ({ navigation }) => {
   let fetchData = async () => {
     setError(false)
     setIsLoading(true)
-    //watchList
-    let assets = user.watchList.map(data => {
-      return data.id.toLowerCase()
-    })
-    //if watchlist is 0,get random coins
-    if (assets.length == 0) {
-      let response = await dispatch(loadCoins(1))
-      if (!response.bool) {
-        setError(true)
-        setIsLoading(false)
-        return
-      }
-//hence no error occured
-      setCoins([response.message[0], response.message[1], response.message[2], response.message[3], response.message[4], response.message[5]]);
-
-      setFilteredCoins([response.message[0], response.message[1], response.message[2], response.message[3], response.message[4], response.message[5]]);
-
-      setIsLoading(false)
-      return
-    }
-    //if user has coins in watchlist,
-    let transformIds = assets.join('%2c')
-    let response = await dispatch(loadWatchList(1, transformIds))
-
+    let response = await dispatch(loadCoins(1))
     if (!response.bool) {
       setError(true)
       setIsLoading(false)
       return
     }
-    setCoins((existingCoins) => [...existingCoins, ...response.message]);
-    setFilteredCoins((existingCoins) => [...response.message]);
+    //hence no error occured
+    setCoins([response.message[0], response.message[1], response.message[2], response.message[3], response.message[4], response.message[5]]);
+
+    setFilteredCoins([response.message[0], response.message[1], response.message[2], response.message[3], response.message[4], response.message[5]]);
+
     setIsLoading(false)
+    return
+
+
   }
 
 
@@ -240,8 +223,8 @@ const styles = StyleSheet.create({
   /*end of header section style*/
   middlesection: {
     backgroundColor: '#fff',
-    paddingBottom:100
-    
+    paddingBottom: 100
+
   },
   trending: {
     fontSize: 25,

@@ -5,7 +5,7 @@ import CryptoCard from '../component/currencyContainer'
 import WalletAssetLoader from "../loaders/walletAssetsLoader";
 import { loadCoins } from "../store/action/appStorage";
 import Error from '../component/errorComponent'
-import { useDispatch,useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { OptimizedFlatList } from 'react-native-optimized-flatlist'
 import FooterLoader from '../loaders/listFooterLoader'
 
@@ -18,7 +18,7 @@ let BuyCryptoList = ({ navigation }) => {
   let [isLoading, setIsLoading] = useState(true)
   let [error, setError] = useState(false)
   let dispatch = useDispatch()
-  let { background,importantText,normalText,fadeColor,blue,fadeButtonColor } = useSelector(state => state.userAuth)
+  let { background, importantText, normalText, fadeColor, blue, fadeButtonColor } = useSelector(state => state.userAuth)
 
   //preventing memory leak
   useEffect(() => {
@@ -64,9 +64,11 @@ let BuyCryptoList = ({ navigation }) => {
 
   let fetchData = async (pageNumber) => {
     // You can await here
+    console.log('correct screen')
     setError(false)
     let response = await dispatch(loadCoins(1))
     if (!response.bool) {
+      console.log(response)
       setError(true)
       setIsLoading(false)
       return
@@ -93,27 +95,7 @@ let BuyCryptoList = ({ navigation }) => {
 
   let onEndFetch = async (pageNumber) => {
     // You can await here
-
-    let response = await dispatch(loadCoins(pageNumber))
-    if (!response.bool) {
-
-      setError(true)
-      return
-    }
-    //removing duplicate
-    let arr = [...coins, ...response.message]
-    let uniqueIds = []
-    const unique = arr.filter(element => {
-      const isDuplicate = uniqueIds.includes(element.id)
-      if (!isDuplicate) {
-        uniqueIds.push(element)
-        return true
-      }
-      return false
-    })
-    setCoins(unique);
-
-    setFilteredCoins(unique);
+    return
 
   }
 
@@ -145,22 +127,22 @@ let BuyCryptoList = ({ navigation }) => {
     return <Error tryAgain={fetchData} navigation={navigation} />
   }
 
-  return <SafeAreaView style={{ flex: 1, backgroundColor:background }}>
-    <View style={{ ...styles.headerContainer,backgroundColor:background }}>
+  return <SafeAreaView style={{ flex: 1, backgroundColor: background }}>
+    <View style={{ ...styles.headerContainer, backgroundColor: background }}>
 
       <View style={styles.assetsheaderText}>
         <Pressable onPress={() => navigation.goBack()} style={styles.assetsheaderTextCon}>
-          <Feather name="arrow-left" size={25} color={background==='white'?"black":"white"} />
-          <Text style={{...styles.assetsText,color:importantText}}>Buy an asset</Text>
+          <Feather name="arrow-left" size={25} color={background === 'white' ? "black" : "white"} />
+          <Text style={{ ...styles.assetsText, color: importantText }}>Buy an asset</Text>
         </Pressable>
       </View>
 
       <View style={styles.assetsheaderCon}>
 
-        <KeyboardAvoidingView style={focus ? { ...styles.inputContainer, borderColor: blue } : { ...styles.inputContainer, borderColor:importantText , }}>
+        <KeyboardAvoidingView style={focus ? { ...styles.inputContainer, borderColor: blue } : { ...styles.inputContainer, borderColor: importantText, }}>
           <FontAwesome name="search" size={18} color={focus ? "#1652f0" : "rgb(44, 44, 44)"} />
           <TextInput
-            style={{ ...styles.input}}
+            style={{ ...styles.input }}
             onChangeText={changeText}
             value={text}
             placeholder="Search"
@@ -181,7 +163,7 @@ let BuyCryptoList = ({ navigation }) => {
     </View>
 
 
-    <View style={{...styles.middlesection,backgroundColor:background}}>
+    <View style={{ ...styles.middlesection, backgroundColor: background }}>
       <OptimizedFlatList
         showsVerticalScrollIndicator={false}
         data={filteredCoins}
@@ -197,7 +179,7 @@ let BuyCryptoList = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
-  
+
   headerContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -252,15 +234,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 15
 
-},
-input: {
+  },
+  input: {
     height: 45,
     paddingHorizontal: 10,
     fontFamily: 'ABeeZee',
     marginBottom: 5,
     alignSelf: 'stretch',
     width: '80%'
-},
+  },
   /*end of header section style*/
   middlesection: {
     backgroundColor: '#fff',

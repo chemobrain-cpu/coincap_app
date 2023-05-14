@@ -19,7 +19,7 @@ let SendList = ({ navigation }) => {
     let [isLoading, setIsLoading] = useState(true)
     let [error, setError] = useState(false)
     let dispatch = useDispatch()
-    let { user,background,importantText,normalText,fadeColor,blue,fadeButtonColor  } = useSelector(state => state.userAuth)
+    let { user,background,importantText,normalText,fadeColor,blue,fadeButtonColor,assets  } = useSelector(state => state.userAuth)
     const [modalTopic, setModalTopic] = useState('');
     const [modalText, setModalText] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
@@ -98,26 +98,20 @@ let SendList = ({ navigation }) => {
 
     let fetchData = async () => {
         setError(false)
-        let assets = user.personalAssets.map(data => {
-            return data.id.toLowerCase()
-        })
-        let transformIds = assets.join('%2c')
-        let response = await dispatch(loadWatchList(transformIds))
-
-        if (!response.bool) {
-            setError(true)
+        if (assets.length == 0) {
+            setCoins([]);
+            setFilteredCoins([]);
             setIsLoading(false)
             return
         }
         //filtering message response
         let arr = []
-        for (let mem of response.message) {
+        for (let mem of assets) {
             for (let val of user.personalAssets) {
                 if (mem.id == val.id.toLowerCase()) {
+                    /*
                     mem.price = mem.current_price
-                    mem.current_price = val.quantity * mem.current_price
-
-                    console.log(mem)
+                    mem.current_price = val.quantity * mem.current_price*/
 
                     arr.push(mem)
                 }

@@ -17,7 +17,7 @@ let ConvertList = ({ navigation }) => {
     let [isLoading, setIsLoading] = useState(true)
     let [error, setError] = useState(false)
     let dispatch = useDispatch()
-    let { user,background,importantText,normalText,fadeColor,blue,fadeButtonColor  } = useSelector(state => state.userAuth)
+    let { user,background,importantText,normalText,fadeColor,blue,fadeButtonColor,assets  } = useSelector(state => state.userAuth)
 
 
       //preventing memory leak
@@ -67,10 +67,7 @@ let ConvertList = ({ navigation }) => {
         setError(false)
         setIsLoading(true)
 
-        let assets = user.personalAssets.map(data => {
-            return data.id.toLowerCase()
-        })
-
+        
         if (assets.length == 0) {
             setCoins([]);
             setFilteredCoins([]);
@@ -78,21 +75,14 @@ let ConvertList = ({ navigation }) => {
             return
         }
 
-        let transformIds = assets.join('%2c')
-        let response = await dispatch(loadWatchList(transformIds))
-
-        if (!response.bool) {
-            setError(true)
-            setIsLoading(false)
-            return
-        }
+       
         //filtering message response
         let arr = []
-        for (let mem of response.message) {
+        for (let mem of assets) {
             for (let val of user.personalAssets) {
                 if (mem.id == val.id.toLowerCase()) {
-                    mem.price = mem.current_price
-                    mem.current_price = val.quantity * mem.current_price
+                    /*mem.price = mem.current_price
+                    mem.current_price = val.quantity * mem.current_price*/
                     arr.push(mem)
                 }
             }
@@ -111,6 +101,7 @@ let ConvertList = ({ navigation }) => {
     }, [])
 
     const renderItem = ({ item, index }) => {
+
         return <CryptoCard navigationHandler={() => navigationHandler(item)}
             key={item}
             coin={item}

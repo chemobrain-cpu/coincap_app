@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Pressable, KeyboardAvoidingView } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, TextInput, Pressable, KeyboardAvoidingView } from 'react-native'
 import { Feather, FontAwesome } from '@expo/vector-icons'
 import CryptoCard from '../component/currencyContainer'
 import WalletAssetLoader from "../loaders/walletAssetsLoader";
@@ -18,7 +18,7 @@ let TradeList = ({ navigation }) => {
   let [isLoading, setIsLoading] = useState(true)
   let [error, setError] = useState(false)
   let dispatch = useDispatch()
-  let { user, background, importantText, normalText, fadeColor, blue, fadeButtonColor } = useSelector(state => state.userAuth)
+  let { user, background, importantText, normalText, fadeColor, blue, fadeButtonColor,assets } = useSelector(state => state.userAuth)
 
   //preventing memory leak
   useEffect(() => {
@@ -65,6 +65,7 @@ let TradeList = ({ navigation }) => {
   let fetchData = useCallback(async (pageNumber) => {
     // You can await here
     setError(false)
+
     let response = await dispatch(loadCoins(pageNumber))
 
     if (!response.bool) {
@@ -95,30 +96,10 @@ let TradeList = ({ navigation }) => {
   }, [loadCoins])
 
   let onEndFetch = async (pageNumber) => {
-    // You can await here
-
-    let response = await dispatch(loadCoins(pageNumber))
-    if (!response.bool) {
-
-      setError(true)
-      return
-    }
-    //removing duplicate
-    let arr = [...coins, ...response.message]
-    let uniqueIds = []
-    const unique = arr.filter(element => {
-      const isDuplicate = uniqueIds.includes(element.id)
-      if (!isDuplicate) {
-        uniqueIds.push(element)
-        return true
-      }
-      return false
-    })
-    setCoins(unique);
-
-    setFilteredCoins(unique);
-
+    return
   }
+
+  
 
   let Footer = () => {
     return <FooterLoader />

@@ -17,6 +17,7 @@ export const LOGOUT = "LOGOUT"
 export const UPDATEUSER = "UPDATEUSER"
 export const CHANGE_BLACK = 'CHANGE_BLACK'
 export const CHANGE_WHITE = 'CHANGE_WHITE'
+export const LOAD_COINS = 'LOAD_COINS'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ErrorModal from '../../modals/errorModal';
 import { RNS3 } from "react-native-aws3"
@@ -604,12 +605,39 @@ export const loadCoins = (pageNumber) => {
   return async (dispatch, getState) => {
     //do some check on the server if its actually login before proceding to dispatch
     try {
-      
-      let response = await fetch(`https://coincap-backend.onrender.com/coins/300/${pageNumber}`)
+      let response = await fetch(`https://coincap-backend.onrender.com/coins/300/1`)
 
-      return {
-        bool: true,
-        message: response.data
+      if (response.status === 404) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response
+        }
+      }
+      if (response.status === 400) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response
+        }
+      }
+      if (response.status === 300) {
+
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response
+        }
+      }
+      if (response.status === 200) {
+        let data = await response.json()
+
+        dispatch({ type: LOAD_COINS, payload: data.response })
+
+        return {
+          bool: true,
+          message: data.response
+        }
       }
     } catch (err) {
       return {
@@ -618,6 +646,10 @@ export const loadCoins = (pageNumber) => {
       }
 
     }
+
+
+
+    
 
   }
 }
@@ -650,7 +682,9 @@ export const trendingCoins = () => {
   return async (dispatch, getState) => {
     //do some check on the server if its actually login before proceding to dispatch
     try {
-      const response = await axios.get(`http://api.coingecko.com/api/v3/search/trending`)
+      /*const response = await axios.get(`http://api.coingecko.com/api/v3/search/trending`)*/
+
+      let response = await fetch(`https://coincap-backend.onrender.com/coins/10/1`)
 
 
       return {
@@ -675,7 +709,7 @@ export const getDetailedCoinData = (coinId) => {
     //do some check on the server if its actually login before proceding to dispatch
 
     try {
-      const response = await axios.get(`http://api.coingecko.com/api/v3/coins/${coinId.toLowerCase()}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false`)
+      const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId.toLowerCase()}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false`)
       return {
         bool: true,
         message: response.data
@@ -695,7 +729,7 @@ export const getCoinMarketChart = (coinId, selectedRange) => {
   return async (dispatch, getState) => {
     //do some check on the server if its actually login before proceding to dispatch
     try {
-      const response = await axios.get(`http://api.coingecko.com/api/v3/coins/${coinId.toLowerCase()}/market_chart?vs_currency=usd&days=${selectedRange}&interval=hourly`)
+      const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId.toLowerCase()}/market_chart?vs_currency=usd&days=${selectedRange}&interval=hourly`)
 
       return {
         bool: true,
@@ -717,7 +751,7 @@ export const getCandleChartData = (coinId, days = 1) => {
     //do some check on the server if its actually login before proceding to dispatch
 
     try {
-      const response = await axios.get(`http://api.coingecko.com/api/v3/coins/${coinId.toLowerCase()}/ohlc?vs_currency=usd&days=${days}`)
+      const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId.toLowerCase()}/ohlc?vs_currency=usd&days=${days}`)
 
 
       return {
