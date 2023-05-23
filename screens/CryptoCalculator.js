@@ -116,7 +116,7 @@ const Calculator = ({ navigation }) => {
             setModalVisible(false)
             return navigation.navigate("Assets")
         }
-    }git addgi
+    }
 
 
     //button function
