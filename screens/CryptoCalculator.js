@@ -447,6 +447,7 @@ const Calculator = ({ navigation }) => {
 
         }
     }
+    //testing
 
 
     let changeVisibility = () => {
